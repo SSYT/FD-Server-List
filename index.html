@@ -1,0 +1,313 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Servers List</title>
+      <a href="http://www.forumgratuit.ro" target="_blank" style="display: none">forumgratuit.ro</a>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <style type="text/css">
+            .table {
+                    border-top-color: #428BCA;
+            }
+            
+            .table thead th {
+                    background-color: #428BCA;
+                    border-color: #428BCA !important;
+                    color: #FFF;
+            }
+      #red{
+      color: red;
+      padding: 0px;
+      margin: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="toolbar">0
+      <div class="container">
+        
+      </div>
+    </div>
+    <div class="jumbotron">
+      <div class="container">
+                <h1 class="display-3">FraNNNta Desing - Server List</h1>
+              <p>
+                <a class="btn btn-large btn-primary" href="http://www.frannnta-design.com/forum">Forum</a>
+                <a class="btn btn-large btn-primary" href="http://www.frannnta-design.com/h18-servers-list">Server List</a>
+                <a class="btn btn-large btn-primary" href="#" id="add_server">Add Server</a>
+              </p>
+      </div>
+    </div>
+    <div class="container">
+      <h1 class="rewrite">Servers List</h1>
+      <div class="row" id="server_form" style="display: none">
+              <form name="submit" method="post">
+                      <fieldset>
+                              <dl><dd>Server Name:</dd><dd><input type="text" name="server_name" placeholder="CS.NAME.RO" /></dd></dl>
+                              <dl><dd>Server IP:</dd><dd><input type="text" name="server_ip" placeholder="127.0.0.1" /></dd></dl>
+                              <dl><dd>Server Port:</dd>
+                                      <dd>
+                                              <select name="server_port">
+                                                      <option value="27015">27015</option>
+                                                      <option value="27016">27016</option>
+                                              </select>
+                                      </dd>
+                              </dl>
+                              <dl><dd>Server Slots:</dd>
+                                      <dd>
+                                              <select name="server_slots">
+                                                      <option value="14">14</option>
+                                                      <option value="18">18</option>
+                                                      <option value="24">24</option>
+                                                      <option value="32">32</option>
+                                              </select>
+                                      </dd>
+                              </dl>
+                              <dl><dd>Server Mode:</dd>
+                                      <dd>
+                                              <select name="server_mode">
+                                                      <option value="Clasic">Clasic</option>
+                                                      <option value="CS:GO">CS:GO</option>
+                                                      <option value="HNS">HNS</option>
+                                                      <option value="JB">JB</option>
+                                                      <option value="Zombie">Zombie</option>
+                                                      <option value="Respawn">Respawn</option>
+                                                      <option value="Alt Mod">Alt Mod</option>
+                                              </select>
+                                      </dd>
+                              </dl>
+                              <dl>
+                                      <dd>Contact</dd>
+                                      <dd><input type="email" name="server_email" placeholder="email@yourmail.com" /></dd>
+                              </dl>
+                      </fieldset>
+                      <fieldset>
+                              <input type="submit" name="add_server" value="Submit" />
+                              <input type="reset" name="reset" value="Reset" />
+                      </fieldset>
+              </form>
+      </div>
+      <div class="row server_list" id="row">
+			<div class="col-sm-12">
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+						  <th colspan="2">Rank</th>
+                                                  <th colspan="2">Game</th>
+                                                  <th colspan="2">Name</th>
+                                                  <th colspan="2">Players</th>
+                                                  <th colspan="2">IP address:Port</th>
+                                                  <th colspan="2">Mod</th>
+                                                  <th colspan="2">Country</th>
+                                                  <th colspan="2">Map</th>
+                                                  <th colspan="2">Votes</th>
+						</tr>
+					</thead>
+					<tbody>
+						<script src="http://forumotiondb.tk/FD%20Servers/index.php?mode=active_servers" type="text/javascript"></script>
+					</tbody>
+				</table>
+			</div>
+		</div>
+      <script type="text/javascript">
+        //<![CDATA[
+          $(document).on("click", "#add_server", function(e) {
+              e.preventDefault();
+              $('#server_form').fadeIn();
+              $('#row').hide();
+              $('.rewrite').html("Submit Server");
+          });
+        
+          $(document).on("click", "#admin", function(e) {
+              e.preventDefault();
+              if($('#server_form').length) $('#server_form').hide();
+              if($('#row').length) $('#row').hide();
+              $('.rewrite').html("Admin Page");
+          });
+        
+          $(document).on("submit", "div#server_form form", function(e) {
+                  e.preventDefault();
+                  $form = $(this);
+                  $formData = $(this).serialize();
+                  var isEmpty = false;
+				  
+                  $('input').each(function() {
+                        if (!$(this).val()) { 
+                                $(this).addClass('borderR').focus();
+                                isEmpty = false;
+                        } 
+        		else
+                        {
+                                isEmpty = true;
+                        }
+                        
+                        return isEmpty;
+                  });
+				  
+                  if(isEmpty == true)
+                  {
+                          var $ajax_server = $.ajax({
+                                          type: 'POST',
+                                          url: 'http://forumotiondb.tk/FD%20Servers/index.php?mode=add_servers',
+                                          data: $formData,
+                                          success: function(responseData, textStatus, jqXHR) {
+                                                $('.rewrite').html('Activation Server');
+                                                $('div#server_form').hide();
+                                                $('div#server_form').before('<div class="msg-succes"><p>Un email pentru activarea server-ului va fost trimis pe adresa dvs. de email.<br>Acest email poate ajunge la dvs. intre 5 - 10 minute, verificati folderul Index sau Spam.</p><p>Pentru ori ce probleme va rugam sa ne lasati un email la adresa server@frannta-design.com</p></div>');
+                                          },
+                                          error: function(jqXHR, textStatus, errorThrown) {
+                                                console.log(errorThrown);
+                                          }
+                          });
+                  }
+          });
+        
+          if(/mode=/gi.exec(window.location.pathname))
+          {
+        	  $('div#server_form').hide();
+                  var server_data = "server="+ window.location.pathname.split(/&server=/)[1].split(/&token=/)[0] +"&token=" + window.location.pathname.split(/&token=/)[1];
+                  $.ajax({
+                          type: "GET",
+                          url: "http://forumotiondb.tk/FD%20Servers/activation.php?action=activate_server&"+server_data,
+                          success: function(responseData, textStatus, jqXHR) {
+                            $('.rewrite').html('Activation Server');
+                            $('div#server_form').hide();
+        		  }
+                  });
+          }
+        
+          $(function() {
+                  var forum_data = localStorage.getItem('forum'), forum_array = JSON.parse(forum_data);
+                  if(forum_array.logged == 1 && forum_array.admin_level == 1)
+                  {
+        		  $('#toolbar').show();
+                          $('div#toolbar .container').html('Logged as ' + forum_array.admin_name);
+                          $('a#add_server').after('<a class="btn btn-large btn-primary" href="#" id="admin" style="margin-left: 5px;">Admin Page</a>');
+                          console.log("Admin "+ forum_array.admin_name +" is logged !");
+                  }
+                  else 
+                  {
+                          $('#toolbar').remove();
+                  }
+          });
+        
+          if(/\/live_stats/g.test(window.location.pathname))
+          {
+			  		console.log("Live Stats");
+                  var server_ip = (window.location.pathname.split('live_stats=')[1]);
+                  $('.rewrite').hide();
+                  $('div#server_form').hide();
+                  $('#row.server_list').hide();
+                  $.get('http://forumotiondb.tk/FD%20Servers/live_stats.php?live&server_ip='+server_ip, function(data) {
+                          $('.jumbotron + .container').append(data);
+                  });
+          }
+        //]]>
+      </script>
+    </div>
+    <div id="footer">Copyright &copy; FraNNNta-Design.com | <script src="http://forumotiondb.tk/FD%20Servers/index.php?mode=get_servers" type="text/javascript"></script></div>
+  </body>
+  <style>
+div#footer {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 87%;
+    font-size: 14px;
+    font-weight: 600;
+}
+    
+.jumbotron + .container {
+    min-height: 60%;
+}
+    
+a.btn-stats {
+    float: right;
+    text-decoration: none;
+    font-size: 12px;
+    margin-top: 0px;
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    padding: 3px 5px;
+    border-radius: 2px;
+}
+    
+div#server_form form {
+    background: #f9f9f9;
+    padding: 5px;
+    border: 1px solid #ddd;
+    width: 50%;
+}
+    
+div#server_form form fieldset dd {
+    clear: none;
+    font-size: 17px;
+    font-weight: 600;
+}
+    
+div#server_form form fieldset select {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+    
+input[type="submit"][name="add_server"] {
+    width: 20% !important;
+    background: #FF9800;
+    border: 1px solid rgba(255, 152, 0, 0.65) !important;
+    box-shadow: inset 0 10px 25px #FFC107;
+    color: white;
+    padding: 5px;
+    border-radius: 2px;
+}
+    
+div#server_form form fieldset dl dd input {
+    width: 100%;
+    padding: 10px 5px;
+    border: 1px solid #ddd;
+    font-size: 11px;
+}
+    
+input[type="reset"][name="reset"] {
+    width: 20% !important;
+    background: #FF5722;
+    border: 1px solid rgba(255, 87, 34, 0.16) !important;
+    box-shadow: inset 0 10px 25px rgba(255, 166, 166, 0.98);
+    color: white;
+    padding: 5px;
+    border-radius: 2px;
+}
+    
+div#server_form form fieldset:last-child {
+    text-align: center;
+}
+    
+.msg-succes {
+    padding: 5px;
+    border: 1px solid #68a521;
+    color: white;
+    background: #8BC34A;
+    font-size: 12px;
+    font-weight: 600;
+}
+    
+div#toolbar {
+    position: absolute;
+    width: 100%;
+    padding: 5px 0;
+    background: #607D8B;
+    min-height: 35px;
+    font-size: 0px;
+    display: none;
+}
+    
+div#toolbar .container {
+    font-size: 14px;
+    padding-top: 3px;
+    color: white;
+}
+  </style>
+</html>
